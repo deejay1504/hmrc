@@ -36,8 +36,35 @@ public class ShoppingCartService {
 		return MessageFormat.format(Constants.CHECKOUT_TOTAL, items.toString(), Constants.DF.format(total));
 	}
 	
+	public String checkoutSpecialOffers(List<String> items) {
+		List<String> invalidItems = checkValidItems(items);
+		if (invalidItems.size() > 0) {
+			return MessageFormat.format(Constants.INVALID_CHECKOUT_ITEM, invalidItems.toString());
+		}
+		
+		Double total       = new Double(0);
+		Double appleTotal  = new Double(0);
+		
+		long applesCount = items.stream().filter(i -> i.equalsIgnoreCase(Constants.APPLE)).count();
+		total = total + processBogof(applesCount, appleTotal);
+		
+		return MessageFormat.format(Constants.CHECKOUT_TOTAL, items.toString(), Constants.DF.format(total));
+	}
+	
 	private List<String> checkValidItems(List<String> items) {
 		return items.stream().filter(i -> (!i.equalsIgnoreCase(Constants.ORANGE) && !i.equalsIgnoreCase(Constants.APPLE))).collect(Collectors.toList());
+	}
+	
+	private Double processBogof(long applesCount, Double appleTotal) {
+		if (applesCount == 1) {
+			appleTotal = appleTotal + (1 * itemMap.get(Constants.APPLE));
+		} else {
+			long num = applesCount / 2;
+			long rem = applesCount % 2;
+			appleTotal = appleTotal + (num * itemMap.get(Constants.APPLE));
+			appleTotal = appleTotal + (rem * itemMap.get(Constants.APPLE));
+		}
+		return appleTotal;
 	}
 	
 }

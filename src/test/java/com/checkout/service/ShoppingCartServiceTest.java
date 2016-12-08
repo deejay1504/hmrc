@@ -72,4 +72,16 @@ public class ShoppingCartServiceTest {
     	assertEquals("Invalid shopping cart", "[Pear] is not a valid shopping cart item", checkout);
     }
     
+    @Test
+    public void shouldReturn060BuyOneGetOneFreeForApples() throws IOException, ParseException {
+    	// Given
+    	List<String> items = Arrays.asList("Apple", "Apple");
+        
+        // When we call the service to total the items
+    	String checkout = shoppingCartService.checkoutSpecialOffers(items);
+    	
+    	// Then
+    	assertEquals("Invalid shopping cart", "[Apple, Apple] => £0.60", checkout);
+    }
+    
 }
