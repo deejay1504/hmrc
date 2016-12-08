@@ -84,4 +84,52 @@ public class ShoppingCartServiceTest {
     	assertEquals("Invalid shopping cart", "[Apple, Apple] => £0.60", checkout);
     }
     
+    @Test
+    public void shouldReturn085BuyOneGetOneFreeForApplesWithOrange() throws IOException, ParseException {
+    	// Given
+    	List<String> items = Arrays.asList("Orange", "Apple", "Apple");
+        
+        // When we call the service to total the items
+    	String checkout = shoppingCartService.checkoutSpecialOffers(items);
+    	
+    	// Then
+    	assertEquals("Invalid shopping cart", "[Orange, Apple, Apple] => £0.85", checkout);
+    }
+
+    @Test
+    public void shouldReturn145BuyOneGetOneFreeForApplesWithOrange() throws IOException, ParseException {
+    	// Given
+    	List<String> items = Arrays.asList("Orange", "Apple", "Apple", "Apple", "Apple");
+        
+        // When we call the service to total the items
+    	String checkout = shoppingCartService.checkoutSpecialOffers(items);
+    	
+    	// Then
+    	assertEquals("Invalid shopping cart", "[Orange, Apple, Apple, Apple, Apple] => £1.45", checkout);
+    }
+    
+    @Test
+    public void shouldReturn050ThreeForTwoOranges() throws IOException, ParseException {
+    	// Given
+    	List<String> items = Arrays.asList("Orange", "Orange", "Orange");
+        
+        // When we call the service to total the items
+    	String checkout = shoppingCartService.checkoutSpecialOffers(items);
+    	
+    	// Then
+    	assertEquals("Invalid shopping cart", "[Orange, Orange, Orange] => £0.50", checkout);
+    }
+    
+    @Test
+    public void shouldReturn110ThreeForTwoOrangesWithApple() throws IOException, ParseException {
+    	// Given
+    	List<String> items = Arrays.asList("Orange", "Orange", "Apple", "Orange");
+        
+        // When we call the service to total the items
+    	String checkout = shoppingCartService.checkoutSpecialOffers(items);
+    	
+    	// Then
+    	assertEquals("Invalid shopping cart", "[Orange, Orange, Apple, Orange] => £1.10", checkout);
+    }
+    
 }

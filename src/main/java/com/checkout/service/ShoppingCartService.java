@@ -44,9 +44,13 @@ public class ShoppingCartService {
 		
 		Double total       = new Double(0);
 		Double appleTotal  = new Double(0);
+		Double orangeTotal = new Double(0);
 		
 		long applesCount = items.stream().filter(i -> i.equalsIgnoreCase(Constants.APPLE)).count();
 		total = total + processBogof(applesCount, appleTotal);
+		
+		long orangesCount = items.stream().filter(i -> i.equalsIgnoreCase(Constants.ORANGE)).count();
+		total = total + processThreeForTwo(orangesCount, orangeTotal);
 		
 		return MessageFormat.format(Constants.CHECKOUT_TOTAL, items.toString(), Constants.DF.format(total));
 	}
@@ -65,6 +69,14 @@ public class ShoppingCartService {
 			appleTotal = appleTotal + (rem * itemMap.get(Constants.APPLE));
 		}
 		return appleTotal;
+	}
+	
+	private Double processThreeForTwo(long orangesCount, Double orangeTotal) {
+		orangeTotal = orangeTotal + (orangesCount * itemMap.get(Constants.ORANGE));
+		if (orangesCount > 2) {
+			orangeTotal = orangeTotal / ((double) 3 / (double) 2);
+		}
+		return orangeTotal;
 	}
 	
 }
