@@ -11,7 +11,6 @@ Shopping Cart Exercise
 * Junit 4.1.1
 * Jackson 2.3.3
 * Maven 3
-* Apache commons-exec 1.3
 
 
 ###3. To import this project into Eclipse IDE
